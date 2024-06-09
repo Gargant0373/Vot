@@ -32,16 +32,19 @@ html, body {
     font-size: 20px;
 }
 
-.header #locale_percentage {
-    color: #ffb99b;
+.winner {
+    font-size: 20px;
+    font-weight: bold;
 }
 
-#locale {
-    color: #ffb99b;
+.high {
+    color: #fc9579;
 }
 
-#locale_total {
-    color: #ffb99b;
+.reset-box {
+    margin-top: 30px;
+    font-size: 14px;
+    color: #e6e4e4;
 }
 
 .text {
@@ -51,6 +54,14 @@ html, body {
 @media screen and (max-width: 1000px) {
     .header .title {
         font-size: 80px;
+    }
+
+    .winner {
+        font-size: 48px;
+    }
+
+    .reset-box {
+        font-size: 24px;
     }
 
     .header .percentage {
