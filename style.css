@@ -33,7 +33,15 @@ html, body {
 }
 
 .header #locale_percentage {
-    color: #d44001;
+    color: #ffb99b;
+}
+
+#locale {
+    color: #ffb99b;
+}
+
+#locale_total {
+    color: #ffb99b;
 }
 
 .text {
