@@ -1,6 +1,6 @@
 async function fetchLocale() {
     try {
-        const response = await fetch('https://api.rezultatevot.ro/api/ballot?BallotId=117&Division=county&CountyId=4481');
+        const response = await fetch('https://api.rezultatevot.ro/api/ballot?BallotId=114&Division=locality&CountyId=4481&LocalityId=4608');
         if (!response.ok) {
             throw new Error('Failed to fetch locale');
         }
@@ -12,15 +12,24 @@ async function fetchLocale() {
     }
 }
 
+let percentage = 0;
+
 function updateLocale() {
     fetchLocale().then(data => {
         if (!data) return;
         let totalVotes = data.results.totalVotes;
         let eligibleVoters = data.results.eligibleVoters;
-        document.getElementById('locale').textContent = totalVotes;
-        document.getElementById('locale_total').textContent = eligibleVoters;
-        document.getElementById('locale_percentage').textContent = (totalVotes / eligibleVoters * 100) + '%';
+        percentage = totalVotes / eligibleVoters * 100;
+        document.getElementById('locale').textContent = totalVotes.toLocaleString();
+        document.getElementById('locale_total').textContent = eligibleVoters.toLocaleString();
+        document.getElementById('locale_percentage').textContent = percentage.toFixed() + '%';
+        updateOverlay();
     });
+}
+
+function updateOverlay() {
+    let overlayHeight = percentage * 0.01 * 464;
+    document.getElementById('overlay').style.height = overlayHeight + 'px';
 }
 
 function init() {

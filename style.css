@@ -1,0 +1,55 @@
+html, body {
+    font-family: "Open Sans", sans-serif;
+    margin: 0;
+    height: 100%;
+
+    background: rgb(14, 24, 92);
+    background: -moz-linear-gradient(180deg, rgba(14, 24, 92, 1) 0%, rgba(14, 81, 232, 1) 100%);
+    background: -webkit-linear-gradient(180deg, rgba(14, 24, 92, 1) 0%, rgba(14, 81, 232, 1) 100%);
+    background: linear-gradient(180deg, rgba(14, 24, 92, 1) 0%, rgba(14, 81, 232, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#0e185c", endColorstr="#0e51e8", GradientType=1);
+
+    background-repeat: no-repeat;
+
+    color: #FFFFFF;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-direction: center;
+    height: 100%;
+    padding: 20px;
+}
+
+.header .title {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.header .percentage {
+    font-size: 20px;
+}
+
+.header #locale_percentage {
+    color: #d44001;
+}
+
+.text {
+    font-size: 16px;
+}
+
+@media screen and (max-width: 1000px) {
+    .header .title {
+        font-size: 80px;
+    }
+
+    .header .percentage {
+        font-size: 40px;
+    }
+
+    .text {
+        font-size: 36px;
+    }
+}
