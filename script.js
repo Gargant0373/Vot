@@ -12,24 +12,16 @@ async function fetchLocale() {
     }
 }
 
-let percentage = 0;
-
 function updateLocale() {
     fetchLocale().then(data => {
         if (!data) return;
         let totalVotes = data.results.totalVotes;
         let eligibleVoters = data.results.eligibleVoters;
-        percentage = totalVotes / eligibleVoters * 100;
+        let percentage = (totalVotes / eligibleVoters * 100).toFixed(2);
         document.getElementById('locale').textContent = totalVotes.toLocaleString();
         document.getElementById('locale_total').textContent = eligibleVoters.toLocaleString();
-        document.getElementById('locale_percentage').textContent = percentage.toFixed() + '%';
-        updateOverlay();
+        document.getElementById('locale_percentage').textContent = percentage + '%';
     });
-}
-
-function updateOverlay() {
-    let overlayHeight = percentage * 0.01 * 464;
-    document.getElementById('overlay').style.height = overlayHeight + 'px';
 }
 
 function init() {
