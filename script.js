@@ -1,6 +1,8 @@
+const url = "https://api.rezultatevot.ro/api/ballot?BallotId=114&Division=locality&CountyId=4481&LocalityId=4608";
+
 async function fetchLocale() {
     try {
-        const response = await fetch('https://api.rezultatevot.ro/api/ballot?BallotId=114&Division=locality&CountyId=4481&LocalityId=4608');
+        const response = await fetch(url);
         if (!response.ok) {
             throw new Error('Failed to fetch locale');
         }
@@ -27,13 +29,15 @@ function updateLocale() {
         document.getElementById('locale_valide').textContent = localeValide.toLocaleString();
         document.getElementById('locale_null').textContent = nullVotes.toLocaleString();
         document.getElementById('locale_counted').textContent = countedVotes.toLocaleString();
-        document.getElementById('locale_winner').textContent = getWinner(data.results.winners)
+        console.log(data.results.candidates);
+        document.getElementById('locale_winner').textContent = getWinner(data.results.candidates)
     });
 }
 
 function getWinner(winnerArray) {
-    if(winnerArray.length === 0) return "?";
-    let winner = winnerArray.sort((a, b) => b.votes - a.votes)[0];
+    if(winnerArray.length === 0) return "Aflam curand...";
+    let winner = winnerArray[0];
+    document.getElementById('locale_winner').style.color = winner.partyColor;
     return winner.name;
 }
 
