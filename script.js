@@ -1,36 +1,45 @@
 const url = "https://api.rezultatevot.ro/api/ballot?BallotId=114&Division=locality&CountyId=4481&LocalityId=4608";
 
-async function fetchLocale() {
+async function fetchData() {
     try {
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error('Failed to fetch locale');
         }
         const data = await response.json();
-        return data; // return the fetched data
+        return data;
     } catch (error) {
         console.error('Error fetching locale:', error);
         return null;
     }
 }
 
-function updateLocale() {
-    fetchLocale().then(data => {
+function update(elementId, data) {
+    const element = document.getElementById(elementId);
+    if (!element) return;
+    element.textContent = data;
+}
+
+let toUpdate = [
+    { id: 'locale', data: 'totalVotes' },
+    { id: 'locale_total', data: 'eligibleVoters' },
+    { id: 'locale_percentage', data: 'percentage' },
+    { id: 'locale_valide', data: 'validVotes' },
+    { id: 'locale_null', data: 'nullVotes' },
+    { id: 'locale_counted', data: 'countedVotes' },
+    { id: 'locale_winner', data: 'candidates' }
+]
+
+function updateData() {
+    fetchData().then(data => {
         if (!data) return;
-        let totalVotes = data.results.totalVotes;
-        let eligibleVoters = data.results.eligibleVoters;
-        let percentage = (totalVotes / eligibleVoters * 100).toFixed(2);
-        let localeValide = data.results.validVotes;
-        let nullVotes = data.results.nullVotes;
-        let countedVotes = data.results.countedVotes;
-        document.getElementById('locale').textContent = totalVotes.toLocaleString();
-        document.getElementById('locale_total').textContent = eligibleVoters.toLocaleString();
-        document.getElementById('locale_percentage').textContent = percentage + '%';
-        document.getElementById('locale_valide').textContent = localeValide.toLocaleString();
-        document.getElementById('locale_null').textContent = nullVotes.toLocaleString();
-        document.getElementById('locale_counted').textContent = countedVotes.toLocaleString();
-        console.log(data.results.candidates);
-        document.getElementById('locale_winner').textContent = getWinner(data.results.candidates)
+        console.log(data);
+        toUpdate.forEach(item => {
+            update(item.id, data.results[item.data]);
+        });
+
+        let winner = getWinner(data.results.candidates);
+        update('locale_winner', winner);
     });
 }
 
@@ -44,16 +53,18 @@ function getWinner(winnerArray) {
 let resetCountdown = 10;
 
 function reset() {
-    if(resetCountdown <= 0) resetCountdown = 10;
+    if(resetCountdown <= 0) {
+        updateData();
+        resetCountdown = 10;
+    }
     resetCountdown--;
 
     document.getElementById('reset').textContent = resetCountdown;
 }
 
 function init() {
-    updateLocale();
-    setInterval(updateLocale, 10000);
-    
+    updateData();
+
     setInterval(reset, 1000);
 }
 

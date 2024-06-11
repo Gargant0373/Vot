@@ -18,8 +18,8 @@ html, body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    flex-direction: center;
-    height: 100%;
+    align-content: center;
+    height: 80%;
     padding: 20px;
 }
 
